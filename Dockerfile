@@ -1,4 +1,4 @@
-FROM ruby:3.1.1-alpine3.13
+FROM ruby:3.1.1-alpine3.15
 LABEL "repository"="https://github.com/anothrNick/github-tag-action"
 LABEL "homepage"="https://github.com/anothrNick/github-tag-action"
 LABEL "maintainer"="Nick Sjostrom"
