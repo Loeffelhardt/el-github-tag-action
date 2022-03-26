@@ -15,7 +15,7 @@ suffix=${PRERELEASE_SUFFIX:-beta}
 verbose=${VERBOSE:-true}
 filename=${VERSION_FILENAME:-VERSION}
 bundle=${BUNDLE:-false}
-bundler_version=${BUNDLER_VERSION:-2.2.21}
+bundler_version=${BUNDLER_VERSION:-2.3.7}
 bundle_path=${BUNDLE_PATH:-vendor/bundle}
 
 cd ${GITHUB_WORKSPACE}/${source}
@@ -164,7 +164,7 @@ fi
 
 echo ::set-output name=tag::$new
 
-# Bump version file
+# Bump VERSION file
 git remote add github "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git"
 git pull github ${GITHUB_REF} --ff-only
 
@@ -184,7 +184,7 @@ then
   git add Gemfile.lock
 fi
 
-git add filename
+git add $filename
 git commit -m "Bump version to $COMMIT_TITLE"
 
 git push github HEAD:${GITHUB_REF}
