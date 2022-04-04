@@ -1,7 +1,7 @@
 FROM ruby:3.1.1-alpine3.15
-LABEL "repository"="https://github.com/anothrNick/github-tag-action"
-LABEL "homepage"="https://github.com/anothrNick/github-tag-action"
-LABEL "maintainer"="Nick Sjostrom"
+LABEL "repository"="https://github.com/Loeffelhardt/el-github-tag-action"
+LABEL "homepage"="https://github.com/Loeffelhardt/el-github-tag-action"
+LABEL "maintainer"="eBiz Löffelhardt"
 
 COPY entrypoint.sh /entrypoint.sh
 
