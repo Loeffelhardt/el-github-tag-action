@@ -1,6 +1,6 @@
 name: "Github Tag and VERSION Bump"
 description: "Bump and push git tag and update VERSION on merge"
-author: "Nick Sjostrom"
+author: "eBiz Löffelhardt"
 runs:
   using: "docker"
   image: "Dockerfile"
