@@ -172,8 +172,8 @@ test -f $filename || touch $filename
 echo $new > $filename
 export COMMIT_TITLE=$new
 
-git config --global user.email "gha@github.co"
-git config --global user.name "BOXT Tagger"
+git config --global user.email "102973821+loeffelhardt-bot@users.noreply.github.com"
+git config --global user.name "loeffelhardt-bot"
 
 # echo log if verbose is wanted
 if $bundle
