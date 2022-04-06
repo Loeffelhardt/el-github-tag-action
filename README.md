@@ -1,4 +1,4 @@
-# el-github-tag-action
+# Loeffelhardt/el-github-tag-action
 
 A Github Action to automatically bump and tag master, on merge, with the latest SemVer formatted version.
 
