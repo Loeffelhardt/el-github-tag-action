@@ -13,8 +13,21 @@ jobs:
         with:
           token: ${{ secrets.ACCESS_TOKEN }}
           fetch-depth: "0"
+      
       - name: Bump version and push tag
+        id: bump
         uses: Loeffelhardt/el-github-tag-action@main
         env:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           GITHUB_ACTOR: loeffelhardt-bot
+      
+      - name: Notify ms teams channel
+        if: success()
+        uses: Loeffelhardt/el-ms-teams-notification-action@main
+        with:
+          github-token: ${{ secrets.ACCESS_TOKEN }}
+          ms-teams-webhook-uri: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
+          notification-summary: New Tag ${{steps.bump.outputs.new_tag}} (${{steps.bump.outputs.part}}) created
+          notification-color: 17a2b8
+          release-title: Tag
+          timezone: Europe/Berlin
