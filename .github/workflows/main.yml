@@ -27,7 +27,8 @@ jobs:
         with:
           github-token: ${{ secrets.ACCESS_TOKEN }}
           ms-teams-webhook-uri: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
-          notification-summary: Tag ${{steps.bump.outputs.new_tag}} (${{steps.bump.outputs.part}}) created in ${{github.repository}}
+          notification-summary: Tag ${{ steps.bump.outputs.new_tag }} (${{ steps.bump.outputs.part }}) created in ${{ github.repository }}
           notification-color: 17a2b8
-          release-title: Tag
+          release-title: Tag (Branch ${{ github.ref_name }})
+          notification-text: ${{ github.ref_name }} tagged with ${{ steps.bump.outputs.new_tag }} - Old tag was ${{ steps.bump.outputs.tag }}
           timezone: Europe/Berlin
