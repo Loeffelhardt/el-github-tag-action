@@ -9,6 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@master
         with:
+          token: ${{ secrets.ACCESS_TOKEN }}
           fetch-depth: "0"
       - name: Bump version and push tag
         uses: Loeffelhardt/el-github-tag-action@main
