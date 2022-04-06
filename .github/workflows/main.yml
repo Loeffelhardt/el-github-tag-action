@@ -14,3 +14,4 @@ jobs:
         uses: Loeffelhardt/el-github-tag-action@main
         env:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          GITHUB_ACTOR: loeffelhardt-bot
