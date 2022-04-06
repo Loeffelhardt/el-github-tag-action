@@ -27,7 +27,7 @@ jobs:
         with:
           github-token: ${{ secrets.ACCESS_TOKEN }}
           ms-teams-webhook-uri: ${{ secrets.MS_TEAMS_WEBHOOK_URI }}
-          notification-summary: New Tag ${{steps.bump.outputs.new_tag}} (${{steps.bump.outputs.part}}) created
+          notification-summary: Tag ${{steps.bump.outputs.new_tag}} (${{steps.bump.outputs.part}}) created in ${{github.repository}}
           notification-color: 17a2b8
           release-title: Tag
           timezone: Europe/Berlin
