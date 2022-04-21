@@ -18,6 +18,8 @@ bundle=${BUNDLE:-false}
 bundler_version=${BUNDLER_VERSION:-2.3.7}
 bundle_path=${BUNDLE_PATH:-vendor/bundle}
 
+git config --global --add safe.directory /github/workspace
+
 cd ${GITHUB_WORKSPACE}/${source}
 
 echo "*** CONFIGURATION ***"
