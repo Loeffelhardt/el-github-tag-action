@@ -1,4 +1,4 @@
-FROM ruby:3.1.1-alpine3.15
+FROM ruby:3.1.2-alpine3.15
 LABEL "repository"="https://github.com/Loeffelhardt/el-github-tag-action"
 LABEL "homepage"="https://github.com/Loeffelhardt/el-github-tag-action"
 LABEL "maintainer"="eBiz Löffelhardt"
