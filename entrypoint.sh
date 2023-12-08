@@ -88,6 +88,7 @@ case "$tag_context" in
     * ) echo "Unrecognised context"; exit 1;;
 esac
 
+first_tag=false
 
 # if there are none, start tags at INITIAL_VERSION which defaults to 0.0.0
 if [ -z "$tag" ]
@@ -100,6 +101,7 @@ then
     fi
     tag_commit="none"
     pre_tag_commit="none"
+    first_tag=true
 else
     log=$(git log $tag..HEAD --pretty='%B')
     
@@ -135,11 +137,12 @@ fi
 # echo log if verbose is wanted
 if $verbose
 then
-  echo $log
+    echo "Git log:"
+    echo $log
 fi
 
 # Initial tag for release branches
-if [ "$tag" == "$initial_version" ]
+if $first_tag
 then
     new="$tag"
 else
@@ -162,7 +165,7 @@ fi
 if $pre_release
 then
     # Initial tag for non release branches
-    if [ "$pre_tag" == "$initial_version" ]
+    if $first_tag
     then
         new="$new-$suffix.1"; part="pre-$part"
     else
@@ -190,11 +193,13 @@ fi
 
 if $pre_release
 then
-    echo -e "Bumping tag ${pre_tag}"
-    echo -e "New tag ${new}"
+    echo -e "Current branch: ${current_branch}"
+    echo -e "Last tag: ${pre_tag}"
+    echo -e "New tag: ${new}"
 else
-    echo -e "Bumping tag ${tag}"
-    echo -e "New tag ${new}"
+    echo -e "Current branch: ${current_branch}"
+    echo -e "Last tag: ${tag}"
+    echo -e "New tag: ${new}"
 fi
 
 # set outputs
