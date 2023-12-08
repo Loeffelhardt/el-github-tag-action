@@ -61,26 +61,26 @@ preTagFmt="^v?[0-9]+\.[0-9]+\.[0-9]+(-$suffix\.[0-9]+)?$"
 case "$tag_context" in
     *repo*) 
         taglist="$(git for-each-ref --sort=-v:refname --format '%(refname:lstrip=2)' | grep -E "$tagFmt")"
-        if [ -n "$taglist"]
+        if [ -n "$taglist" ]
         then
             tag="$(semver $taglist | tail -n 1)"
         fi
 
         pre_taglist="$(git for-each-ref --sort=-v:refname --format '%(refname:lstrip=2)' | grep -E "$preTagFmt")"
-        if [ -n "$taglist"]
+        if [ -n "$taglist" ]
         then
             pre_tag="$(semver $pre_taglist | tail -n 1)"
         fi
         ;;
     *branch*) 
         taglist="$(git tag --list --merged HEAD --sort=-v:refname | grep -E "$tagFmt")"
-        if [ -n "$taglist"]
+        if [ -n "$taglist" ]
         then
             tag="$(semver $taglist | tail -n 1)"
         fi
 
         pre_taglist="$(git tag --list --merged HEAD --sort=-v:refname | grep -E "$preTagFmt")"
-        if [ -n "$taglist"]
+        if [ -n "$taglist" ]
         then
             pre_tag="$(semver $pre_taglist | tail -n 1)"
         fi
