@@ -138,28 +138,40 @@ then
   echo $log
 fi
 
-case "$log" in
-    *#major* ) new=$(semver -i major $tag); part="major";;
-    *#minor* ) new=$(semver -i minor $tag); part="minor";;
-    *#patch* ) new=$(semver -i patch $tag); part="patch";;
-    *#none* ) 
-        echo "Default bump was set to none. Skipping..."; echo ::set-output name=new_tag::$tag; echo ::set-output name=tag::$tag; exit 0;;
-    * ) 
-        if [ "$default_semvar_bump" == "none" ]; then
-            echo "Default bump was set to none. Skipping..."; echo ::set-output name=new_tag::$tag; echo ::set-output name=tag::$tag; exit 0 
-        else 
-            new=$(semver -i "${default_semvar_bump}" $tag); part=$default_semvar_bump 
-        fi 
-        ;;
-esac
+# Initial tag for release branches
+if [ "$tag" == "$initial_version" ]
+then
+    new="$tag"
+else
+    case "$log" in
+        *#major* ) new=$(semver -i major $tag); part="major";;
+        *#minor* ) new=$(semver -i minor $tag); part="minor";;
+        *#patch* ) new=$(semver -i patch $tag); part="patch";;
+        *#none* ) 
+            echo "Default bump was set to none. Skipping..."; echo ::set-output name=new_tag::$tag; echo ::set-output name=tag::$tag; exit 0;;
+        * ) 
+            if [ "$default_semvar_bump" == "none" ]; then
+                echo "Default bump was set to none. Skipping..."; echo ::set-output name=new_tag::$tag; echo ::set-output name=tag::$tag; exit 0 
+            else 
+                new=$(semver -i "${default_semvar_bump}" $tag); part=$default_semvar_bump 
+            fi 
+            ;;
+    esac
+fi
 
 if $pre_release
 then
-    # Already a prerelease available, bump it
-    if [[ "$pre_tag" == *"$new"* ]]; then
-        new=$(semver -i prerelease $pre_tag --preid $suffix); part="pre-$part"
-    else
+    # Initial tag for non release branches
+    if [ "$pre_tag" == "$initial_version" ]
+    then
         new="$new-$suffix.1"; part="pre-$part"
+    else
+        # Already a prerelease available, bump it
+        if [[ "$pre_tag" == *"$new"* ]]; then
+            new=$(semver -i prerelease $pre_tag --preid $suffix); part="pre-$part"
+        else
+            new="$new-$suffix.1"; part="pre-$part"
+        fi
     fi
 fi
 
@@ -178,9 +190,11 @@ fi
 
 if $pre_release
 then
-    echo -e "Bumping tag ${pre_tag}. \n\tNew tag ${new}"
+    echo -e "Bumping tag ${pre_tag}"
+    echo -e "New tag ${new}"
 else
-    echo -e "Bumping tag ${tag}. \n\tNew tag ${new}"
+    echo -e "Bumping tag ${tag}"
+    echo -e "New tag ${new}"
 fi
 
 # set outputs
@@ -217,7 +231,7 @@ then
 fi
 
 git add $filename
-git commit -m "Bump version to $COMMIT_TITLE"
+git commit -m "Bump version to $COMMIT_TITLE #none"
 
 git push github HEAD:${GITHUB_REF}
 
